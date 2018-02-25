@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9e38816f-c59a-43db-9abc-501647c4005f" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/server.py" afterPath="$PROJECT_DIR$/server.py" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="flask.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/flask.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-720">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1519573733358" expanded="true" signature="263:327" ph="/*!40101 SET... " />
+                <marker date="1519573733358" expanded="true" signature="329:395" ph="/*!40101 SET... " />
+                <marker date="1519573733358" expanded="true" signature="397:461" ph="/*!40101 SET... " />
+                <marker date="1519573733358" expanded="true" signature="463:492" ph="/*!40101 SET... " />
+                <marker date="1519573733358" expanded="true" signature="632:972" ph="CREATE TABLE... documents" />
+                <marker date="1519573733358" expanded="true" signature="1020:4378" ph="INSERT INTO `documents`... " />
+                <marker date="1519573733358" expanded="true" signature="4487:4649" ph="CREATE TABLE... member" />
+                <marker date="1519573733358" expanded="true" signature="4694:4818" ph="INSERT INTO `member`... " />
+                <marker date="1519573733358" expanded="true" signature="4926:5079" ph="CREATE TABLE... users" />
+                <marker date="1519573733358" expanded="true" signature="5123:5242" ph="INSERT INTO `users`... " />
+                <marker date="1519573733358" expanded="true" signature="5320:5368" ph="ALTER TABLE `documents`... " />
+                <marker date="1519573733358" expanded="true" signature="5407:5530" ph="ALTER TABLE `member`... " />
+                <marker date="1519573733358" expanded="true" signature="5568:5612" ph="ALTER TABLE `users`... " />
+                <marker date="1519573733358" expanded="true" signature="5704:5792" ph="ALTER TABLE `documents`... " />
+                <marker date="1519573733358" expanded="true" signature="5837:5921" ph="ALTER TABLE `member`... " />
+                <marker date="1519573733358" expanded="true" signature="5965:6048" ph="ALTER TABLE `users`... " />
+                <marker date="1519573733358" expanded="true" signature="6050:6112" ph="/*!40101 SET... " />
+                <marker date="1519573733358" expanded="true" signature="6114:6178" ph="/*!40101 SET... " />
+                <marker date="1519573733358" expanded="true" signature="6180:6242" ph="/*!40101 SET... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2040">
+              <caret line="136" column="20" lean-forward="false" selection-start-line="136" selection-start-column="20" selection-end-line="136" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+                <marker date="1519577990266" expanded="true" signature="1601:1648" ph="SELECT * FRO... documents" />
+                <marker date="1519577990266" expanded="true" signature="4886:4967" ph="SELECT * FRO... documents" />
+                <marker date="1519577990266" expanded="true" signature="5227:5368" ph="INSERT INTO `documents`... " />
+                <marker date="1519577990266" expanded="true" signature="5948:6006" ph="INSERT INTO `documents`... " />
+                <marker date="1519577990266" expanded="true" signature="6543:6603" ph="SELECT * FRO... users" />
+                <marker date="1519577990266" expanded="true" signature="7081:7106" ph="SELECT * FRO... documents" />
+                <marker date="1519577990266" expanded="true" signature="7218:7240" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="7450:7492" ph="SELECT * FRO... documents" />
+                <marker date="1519577990266" expanded="true" signature="8514:8551" ph="DELETE FROM `documents`... " />
+                <marker date="1519577990266" expanded="true" signature="9083:9124" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="9311:9466" ph="INSERT INTO `topics`... " />
+                <marker date="1519577990266" expanded="true" signature="9691:9730" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="10820:10864" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="11702:11740" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="12546:12582" ph="DELETE FROM `topics`... " />
+                <marker date="1519577990266" expanded="true" signature="12885:12926" ph="SELECT * FRO... documents" />
+                <marker date="1519577990266" expanded="true" signature="13805:13844" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="14419:14463" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="15524:15571" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="16630:16670" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="17726:17763" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="19261:19293" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="20746:20807" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="21307:21379" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="21476:21546" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="21812:21861" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="22061:22100" ph="SELECT * FRO... topics" />
+                <marker date="1519577990266" expanded="true" signature="24427:24552" ph="UPDATE `topics`... " />
+                <marker date="1519577990266" expanded="true" signature="24931:24976" ph="SELECT * FRO... seminar_topics" />
+                <marker date="1519577990266" expanded="true" signature="25591:25634" ph="SELECT * FRO... seminar_topics" />
+                <marker date="1519577990266" expanded="true" signature="25911:26048" ph="INSERT INTO seminar_topics... " />
+                <marker date="1519577990266" expanded="true" signature="26381:26419" ph="DELETE FROM seminar_topics... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/server.py" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="26" />
+    <option name="width" value="1366" />
+    <option name="height" value="738" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="plagiar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="plagiar" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="plagiar" type="PythonConfigurationType" factoryName="Python" singleton="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="plagiar" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9e38816f-c59a-43db-9abc-501647c4005f" name="Default" comment="" />
+      <created>1519574149067</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1519574149067</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="26" width="1366" height="738" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3294893" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/flask.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-720">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1519573733358" expanded="true" signature="263:327" ph="/*!40101 SET... " />
+            <marker date="1519573733358" expanded="true" signature="329:395" ph="/*!40101 SET... " />
+            <marker date="1519573733358" expanded="true" signature="397:461" ph="/*!40101 SET... " />
+            <marker date="1519573733358" expanded="true" signature="463:492" ph="/*!40101 SET... " />
+            <marker date="1519573733358" expanded="true" signature="632:972" ph="CREATE TABLE... documents" />
+            <marker date="1519573733358" expanded="true" signature="1020:4378" ph="INSERT INTO `documents`... " />
+            <marker date="1519573733358" expanded="true" signature="4487:4649" ph="CREATE TABLE... member" />
+            <marker date="1519573733358" expanded="true" signature="4694:4818" ph="INSERT INTO `member`... " />
+            <marker date="1519573733358" expanded="true" signature="4926:5079" ph="CREATE TABLE... users" />
+            <marker date="1519573733358" expanded="true" signature="5123:5242" ph="INSERT INTO `users`... " />
+            <marker date="1519573733358" expanded="true" signature="5320:5368" ph="ALTER TABLE `documents`... " />
+            <marker date="1519573733358" expanded="true" signature="5407:5530" ph="ALTER TABLE `member`... " />
+            <marker date="1519573733358" expanded="true" signature="5568:5612" ph="ALTER TABLE `users`... " />
+            <marker date="1519573733358" expanded="true" signature="5704:5792" ph="ALTER TABLE `documents`... " />
+            <marker date="1519573733358" expanded="true" signature="5837:5921" ph="ALTER TABLE `member`... " />
+            <marker date="1519573733358" expanded="true" signature="5965:6048" ph="ALTER TABLE `users`... " />
+            <marker date="1519573733358" expanded="true" signature="6050:6112" ph="/*!40101 SET... " />
+            <marker date="1519573733358" expanded="true" signature="6114:6178" ph="/*!40101 SET... " />
+            <marker date="1519573733358" expanded="true" signature="6180:6242" ph="/*!40101 SET... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2040">
+          <caret line="136" column="20" lean-forward="false" selection-start-line="136" selection-start-column="20" selection-end-line="136" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+            <marker date="1519577990266" expanded="true" signature="1601:1648" ph="SELECT * FRO... documents" />
+            <marker date="1519577990266" expanded="true" signature="4886:4967" ph="SELECT * FRO... documents" />
+            <marker date="1519577990266" expanded="true" signature="5227:5368" ph="INSERT INTO `documents`... " />
+            <marker date="1519577990266" expanded="true" signature="5948:6006" ph="INSERT INTO `documents`... " />
+            <marker date="1519577990266" expanded="true" signature="6543:6603" ph="SELECT * FRO... users" />
+            <marker date="1519577990266" expanded="true" signature="7081:7106" ph="SELECT * FRO... documents" />
+            <marker date="1519577990266" expanded="true" signature="7218:7240" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="7450:7492" ph="SELECT * FRO... documents" />
+            <marker date="1519577990266" expanded="true" signature="8514:8551" ph="DELETE FROM `documents`... " />
+            <marker date="1519577990266" expanded="true" signature="9083:9124" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="9311:9466" ph="INSERT INTO `topics`... " />
+            <marker date="1519577990266" expanded="true" signature="9691:9730" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="10820:10864" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="11702:11740" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="12546:12582" ph="DELETE FROM `topics`... " />
+            <marker date="1519577990266" expanded="true" signature="12885:12926" ph="SELECT * FRO... documents" />
+            <marker date="1519577990266" expanded="true" signature="13805:13844" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="14419:14463" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="15524:15571" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="16630:16670" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="17726:17763" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="19261:19293" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="20746:20807" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="21307:21379" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="21476:21546" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="21812:21861" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="22061:22100" ph="SELECT * FRO... topics" />
+            <marker date="1519577990266" expanded="true" signature="24427:24552" ph="UPDATE `topics`... " />
+            <marker date="1519577990266" expanded="true" signature="24931:24976" ph="SELECT * FRO... seminar_topics" />
+            <marker date="1519577990266" expanded="true" signature="25591:25634" ph="SELECT * FRO... seminar_topics" />
+            <marker date="1519577990266" expanded="true" signature="25911:26048" ph="INSERT INTO seminar_topics... " />
+            <marker date="1519577990266" expanded="true" signature="26381:26419" ph="DELETE FROM seminar_topics... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

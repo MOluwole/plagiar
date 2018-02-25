@@ -1,7 +1,7 @@
 from __future__ import division
-from flask import Flask ,url_for,render_template,request,abort, session, redirect, send_from_directory
-#from flask.ext import excel
-from  werkzeug.debug import get_current_traceback
+from flask import Flask, url_for, render_template, request, abort, session, redirect, send_from_directory
+# from flask.ext import excel
+from werkzeug.debug import get_current_traceback
 
 import pymysql.cursors
 import math, json, collections
@@ -9,17 +9,21 @@ import os
 import itertools
 import csv
 import re
-#from pyexcel_xlsx import save_data
+
+# from pyexcel_xlsx import save_data
 
 app = Flask(__name__)
-connection = pymysql.connect(host='localhost', user='root', password='root', db='flask', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+connection = pymysql.connect(host='localhost', user='root', password='nigeriA070', db='flask', charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
 app.secret_key = os.urandom(24)
+
 
 def combine_list(list_value):
     combine = []
     for x in list_value:
         combine = combine + x
     return combine
+
 
 def get_error(list_value):
     error = 0
@@ -28,141 +32,147 @@ def get_error(list_value):
             error = error + 1
     return error
 
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
-  count = 0
-  found = []
-  new_doc = []
-  student = []
-  new_record = []
-  old_me = []
-  totalP = 0
-  percentA = 0
-  average = 0
-  old_split = []
-  ermsg = 5
-  old_split = []
-  older_split = []
-  compute = []
-  ermessage = []
-  get_me = ''
+    count = 0
+    found = []
+    new_doc = []
+    student = []
+    new_record = []
+    old_me = []
+    totalP = 0
+    percentA = 0
+    average = 0
+    old_split = []
+    ermsg = 5
+    old_split = []
+    older_split = []
+    compute = []
+    ermessage = []
+    get_me = ''
 
-  if request.method == 'POST':
-    with connection.cursor() as cursor:
-      # Read a single record
-      doc_type = request.form['doc_type'].encode('ascii', 'ignore').lower()
-      doc_ = request.form['document'].encode('ascii', 'ignore').lower()
+    if request.method == 'POST':
+        with connection.cursor() as cursor:
+            # Read a single record
+            doc_type = request.form['doc_type'].encode('ascii', 'ignore').lower()
+            doc_ = request.form['document'].encode('ascii', 'ignore').lower()
 
-      if doc_type != "0":
-          new_doc = doc_.split('.')
-          """ Query Table for Record """
-          sql = "SELECT * FROM `documents` WHERE `doc_type` = %s"
-          cursor.execute(sql, (doc_type))
-          result = cursor.fetchall()
-          prt = ""
-          if int(len(result)) > 0:
-            """ This is the Old Documents From DB """
-            for old in xrange(len(result)):
-              old_ones = result[old]['docs'].encode('ascii', 'ignore').lower()
-              old_split = old_ones.split('.')
-              student_level = result[old]['level'].encode('ascii', 'ignore')
-              student_matric = result[old]['matric'].encode('ascii', 'ignore')
-              supervisor = result[old]['supervisor'].encode('ascii', 'ignore')
-              topic = result[old]['topic'].encode('ascii', 'ignore')
+            if doc_type != "0":
+                new_doc = doc_.split('.')
+                """ Query Table for Record """
+                sql = "SELECT * FROM `documents` WHERE `doc_type` = %s"
+                cursor.execute(sql, (doc_type))
+                result = cursor.fetchall()
+                prt = ""
+                if int(len(result)) > 0:
+                    """ This is the Old Documents From DB """
+                    for old in xrange(len(result)):
+                        old_ones = result[old]['docs'].encode('ascii', 'ignore').lower()
+                        old_split = old_ones.split('.')
+                        student_level = result[old]['level'].encode('ascii', 'ignore')
+                        student_matric = result[old]['matric'].encode('ascii', 'ignore')
+                        supervisor = result[old]['supervisor'].encode('ascii', 'ignore')
+                        topic = result[old]['topic'].encode('ascii', 'ignore')
 
-              for x in xrange(len(old_split)):
-                old_var = old_split[x].strip()
-                """ This is for the new Doc... """
-                for doc in xrange(len(new_doc)):
-                  new_ones = new_doc[doc].strip().lower()
-                  if old_var == new_ones:
-                    if new_ones != '':
-                      old_me.append(old_var)
-                      found.append({
-                       'found' : new_ones,
-                       'matric': student_matric,
-                       'level': student_level,
-                       'topic': topic,
-                       'supervisor' : supervisor })
-                      older_split.append(old_split)
-                      count = count +1
-                      ermsg = 0
-                      compute = combine_list(older_split)
-                      ermessage.append('0')
-                  else:
-                      ermessage.append('1')
-              get_me = get_error(ermessage)
-              #totalP = int(len(found)) / int(len(compute))
-              #average = math.floor(totalP * 100)
-          else:
-              ermsg = 3
-      else:
-          ermsg = 2
-  else:
-      result = ""
-  #combine = str(len(found)) + str(len(old_split))
-  return render_template("home.html", data=found, exist= len(compute), counter=int(len(found)), avg = average, std=student, errmsg = ermsg, test = get_me )
+                        for x in xrange(len(old_split)):
+                            old_var = old_split[x].strip()
+                            """ This is for the new Doc... """
+                            for doc in xrange(len(new_doc)):
+                                new_ones = new_doc[doc].strip().lower()
+                                if old_var == new_ones:
+                                    if new_ones != '':
+                                        old_me.append(old_var)
+                                        found.append({
+                                            'found': new_ones,
+                                            'matric': student_matric,
+                                            'level': student_level,
+                                            'topic': topic,
+                                            'supervisor': supervisor})
+                                        older_split.append(old_split)
+                                        count = count + 1
+                                        ermsg = 0
+                                        compute = combine_list(older_split)
+                                        ermessage.append('0')
+                                else:
+                                    ermessage.append('1')
+                        get_me = get_error(ermessage)
+                        # totalP = int(len(found)) / int(len(compute))
+                        # average = math.floor(totalP * 100)
+                else:
+                    ermsg = 3
+            else:
+                ermsg = 2
+    else:
+        result = ""
+    # combine = str(len(found)) + str(len(old_split))
+    return render_template("home.html", data=found, exist=len(compute), counter=int(len(found)), avg=average,
+                           std=student, errmsg=ermsg, test=get_me)
+
 
 @app.route('/ajax', methods=['GET', 'POST'])
 def ajax():
     if request.method == 'POST':
-      topic = request.form['topic'].encode('ascii', 'ignore')
-      superv = request.form['supervisor'].encode('ascii', 'ignore')
-      year = request.form['year'].encode('ascii', 'ignore')
-      level = request.form['level'].encode('ascii', 'ignore')
-      matric = request.form['matric'].encode('ascii', 'ignore')
-      doc_type = request.form['doc_type'].encode('ascii', 'ignore')
-      doc = request.form['doc'].encode('ascii', 'ignore')
-      """
+        topic = request.form['topic'].encode('ascii', 'ignore')
+        superv = request.form['supervisor'].encode('ascii', 'ignore')
+        year = request.form['year'].encode('ascii', 'ignore')
+        level = request.form['level'].encode('ascii', 'ignore')
+        matric = request.form['matric'].encode('ascii', 'ignore')
+        doc_type = request.form['doc_type'].encode('ascii', 'ignore')
+        doc = request.form['doc'].encode('ascii', 'ignore')
+        """
         Connection to DB
       """
-      cursor = connection.cursor()
-      sql = "SELECT * FROM `documents` WHERE `doc_type` = %s AND `level` = %s AND `matric`= %s"
-      cursor.execute(sql, (doc_type, level, matric))
-      result = cursor.fetchall()
-      rowcount = str(len(result))
+        cursor = connection.cursor()
+        sql = "SELECT * FROM `documents` WHERE `doc_type` = %s AND `level` = %s AND `matric`= %s"
+        cursor.execute(sql, (doc_type, level, matric))
+        result = cursor.fetchall()
+        rowcount = str(len(result))
 
-      if rowcount == '1':
-        message = "exist"
-      else:
-        cur = connection.cursor()
-        query = "INSERT INTO `documents`(`docs`, `doc_type`, `level`, `matric`, `topic`, `supervisor`) VALUES(%s, %s, %s, %s, %s, %s)"
-        cur.execute(query, (doc, doc_type, level, matric, topic, superv))
-        connection.commit()
-        message = "ok"
+        if rowcount == '1':
+            message = "exist"
+        else:
+            cur = connection.cursor()
+            query = "INSERT INTO `documents`(`docs`, `doc_type`, `level`, `matric`, `topic`, `supervisor`) " \
+                    "VALUES(%s, %s, %s, %s, %s, %s)"
+            cur.execute(query, (doc, doc_type, level, matric, topic, superv))
+            connection.commit()
+            message = "ok"
     else:
-      message = "guest"
+        message = "guest"
     return message
+
 
 @app.route('/add-new', methods=['GET', 'POST'])
 def add_new():
-  lpush = ''
-  ssid = ""
-  if request.method == 'POST':
-
-    doc_type = request.form['doc_type'].encode('ascii', 'ignore')
-    doc_main = request.form['document'].encode('ascii', 'ignore')
-    #a = doc_type + "_" + doc_main
-    #lpush.append(a)
-    cursor = connection.cursor()
-    sql = "INSERT INTO `documents`(`docs`, `doc_type`) VALUES(%s, %s)"
-    cursor.execute(sql, (doc_main, doc_type))
-    connection.commit()
-    lpush = 'Record Added Successfully !'
-  else:
     lpush = ''
+    ssid = ""
+    if request.method == 'POST':
 
-  """
+        doc_type = request.form['doc_type'].encode('ascii', 'ignore')
+        doc_main = request.form['document'].encode('ascii', 'ignore')
+        # a = doc_type + "_" + doc_main
+        # lpush.append(a)
+        cursor = connection.cursor()
+        sql = "INSERT INTO `documents`(`docs`, `doc_type`) VALUES(%s, %s)"
+        cursor.execute(sql, (doc_main, doc_type))
+        connection.commit()
+        lpush = 'Record Added Successfully !'
+    else:
+        lpush = ''
+
+    """
     Validate User Session
   """
-  return render_template('add-new.html', data=lpush)
+    return render_template('add-new.html', data=lpush)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     msg = ""
     if request.method == 'POST':
         email = request.form['email'].encode('ascii', 'ignore')
-        pass1  = request.form['pass'].encode('ascii', 'ignore')
+        pass1 = request.form['pass'].encode('ascii', 'ignore')
         cursor = connection.cursor()
         sql = "SELECT * FROM `users` WHERE `email` = %s AND `password` = %s"
         cursor.execute(sql, (email, pass1))
@@ -172,9 +182,10 @@ def login():
             session['adminkey'] = email
             return redirect(url_for('dashboard'))
         else:
-            #redirect(url_for('login'))
+            # redirect(url_for('login'))
             msg = "Invalid Information supplied !"
-    return render_template('login.html', error = msg )
+    return render_template('login.html', error=msg)
+
 
 @app.route('/dashboard')
 def dashboard():
@@ -188,23 +199,31 @@ def dashboard():
     query = "SELECT * FROM `topics`"
     cursor.execute(query)
     rows1 = len(cursor.fetchall())
-    return render_template('dashboard.html', doc = rows, topic = rows1)
+    return render_template('dashboard.html', doc=rows, topic=rows1)
+
 
 @app.route('/view')
 def view():
-  connect = connection.cursor()
-  sql = "SELECT * FROM `documents` ORDER BY id DESC"
-  connect.execute(sql)
-  result = connect.fetchall()
-  rows = len(result)
-  _doc_ = []
-  ssid = ""
-  for x in xrange(len(result)):
-    #_doc_type[x] = result[x]['doc_type'].encode('ascii', 'ignore')
-    #_doc_[x] = result[x]['docs'].encode('ascii', 'ignore')
-    _doc_.append({ 'id': str(result[x]['id']).encode('ascii', 'ignore'), 'topic': result[x]['topic'].encode('ascii', 'ignore'), 'doc_type': result[x]['doc_type'].encode('ascii', 'ignore'), 'doc' : result[x]['docs'].encode('ascii', 'ignore'), 'supervisor': result[x]['supervisor'].encode('ascii', 'ignore'), 'level': result[x]['level'].encode('ascii', 'ignore'), 'matric': result[x]['matric'].encode('ascii', 'ignore')})
+    connect = connection.cursor()
+    sql = "SELECT * FROM `documents` ORDER BY id DESC"
+    connect.execute(sql)
+    result = connect.fetchall()
+    rows = len(result)
+    _doc_ = []
+    ssid = ""
+    for x in xrange(len(result)):
+        # _doc_type[x] = result[x]['doc_type'].encode('ascii', 'ignore')
+        # _doc_[x] = result[x]['docs'].encode('ascii', 'ignore')
+        _doc_.append({'id': str(result[x]['id']).encode('ascii', 'ignore'),
+                      'topic': result[x]['topic'].encode('ascii', 'ignore'),
+                      'doc_type': result[x]['doc_type'].encode('ascii', 'ignore'),
+                      'doc': result[x]['docs'].encode('ascii', 'ignore'),
+                      'supervisor': result[x]['supervisor'].encode('ascii', 'ignore'),
+                      'level': result[x]['level'].encode('ascii', 'ignore'),
+                      'matric': result[x]['matric'].encode('ascii', 'ignore')})
 
-  return render_template('view.html', rowcount = rows, doc=_doc_)
+    return render_template('view.html', rowcount=rows, doc=_doc_)
+
 
 @app.route('/edit_url/<ID>', methods=['GET', 'POST'])
 def edit_url(ID):
@@ -213,6 +232,7 @@ def edit_url(ID):
     cursor.execute(sql, (ID))
     connection.commit()
     return "deleted"
+
 
 @app.route('/add-topic', methods=['GET', 'POST'])
 def add_topic():
@@ -232,7 +252,8 @@ def add_topic():
         if rowcount > 0:
             msg = "Record already exist"
         else:
-            query = "INSERT INTO `topics`(`topic`, `student`, `supervisor`, `category`, `phone`, `session`, `level`) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+            query = "INSERT INTO `topics`(`topic`, `student`, `supervisor`, `category`, `phone`, " \
+                    "`session`, `level`) VALUES(%s, %s, %s, %s, %s, %s, %s)"
             cursor.execute(query, (topic, matric, supervisor, platform, phone, session, level))
             connection.commit()
             msg = "Record Inserted Successfully"
@@ -243,37 +264,44 @@ def add_topic():
     data = []
     rows = len(fetch)
     for result in xrange(len(fetch)):
-        data.append({ 'topic' : fetch[result]['topic'].encode('ascii', 'ignore'), 'matric' : fetch[result]['student'].encode('ascii', 'ignore'), 'supervisor' : fetch[result]['supervisor'].encode('ascii', 'ignore'), 'level': fetch[result]['level'], 'category' : fetch[result]['category'].encode('ascii', 'ignore'), 'phone': fetch[result]['phone'].encode('ascii','ignore'), 'session': fetch[result]['session'].encode('ascii', 'ignore'), 'id': str(fetch[result]['id']).encode('ascii', 'ignore')})
-    return render_template('add-topic.html', message = msg, record = data, rowcount = rows)
+        data.append({'topic': fetch[result]['topic'].encode('ascii', 'ignore'),
+                     'matric': fetch[result]['student'].encode('ascii', 'ignore'),
+                     'supervisor': fetch[result]['supervisor'].encode('ascii', 'ignore'),
+                     'level': fetch[result]['level'], 'category': fetch[result]['category'].encode('ascii', 'ignore'),
+                     'phone': fetch[result]['phone'].encode('ascii', 'ignore'),
+                     'session': fetch[result]['session'].encode('ascii', 'ignore'),
+                     'id': str(fetch[result]['id']).encode('ascii', 'ignore')})
+    return render_template('add-topic.html', message=msg, record=data, rowcount=rows)
+
 
 @app.route('/topic-search/<topic>', methods=['GET', 'POST'])
 def search(topic):
-    #dic = [{ 'topic': 'Hello', 'method': "POST"}, { 'topic': 'World', 'method': 'GET'}]
+    # dic = [{ 'topic': 'Hello', 'method': "POST"}, { 'topic': 'World', 'method': 'GET'}]
     q = topic.encode('ascii', 'ignore')
     cursor = connection.cursor()
     sql = "SELECT * FROM `topics` WHERE `topic` LIKE %s"
-    cursor.execute(sql, ('%'+q+'%'))
+    cursor.execute(sql, ('%' + q + '%'))
     fetch = cursor.fetchall()
     rowcount = str(len(fetch))
     dic = []
     for x in xrange(len(fetch)):
-         #dic.append({ 'topic': fetch[x]['topic'].encode('ascii', 'ignore')})
-          d = collections.OrderedDict()
-          d['id'] = int(fetch[x]['id'])
-          d['topic'] = fetch[x]['topic']
-          d['supervisor'] = fetch[x]['supervisor']
-          d['category'] = fetch[x]['category']
-          d['level'] = fetch[x]['level']
-          d['phone'] = fetch[x]['phone']
-          d['matric'] = fetch[x]['student']
-          d['session'] = fetch[x]['session']
-          dic.append(d)
+        # dic.append({ 'topic': fetch[x]['topic'].encode('ascii', 'ignore')})
+        d = collections.OrderedDict()
+        d['id'] = int(fetch[x]['id'])
+        d['topic'] = fetch[x]['topic']
+        d['supervisor'] = fetch[x]['supervisor']
+        d['category'] = fetch[x]['category']
+        d['level'] = fetch[x]['level']
+        d['phone'] = fetch[x]['phone']
+        d['matric'] = fetch[x]['student']
+        d['session'] = fetch[x]['session']
+        dic.append(d)
     result = json.dumps(dic)
     return result
 
+
 @app.route('/search-topic-id/<id>', methods=['GET', 'POST'])
 def search_topic_id(id):
-
     q = id.encode('ascii', 'ignore')
     cursor = connection.cursor()
     sql = "SELECT * FROM `topics` WHERE `id` = %s"
@@ -282,23 +310,23 @@ def search_topic_id(id):
     rowcount = str(len(fetch))
     dic = []
     for x in xrange(len(fetch)):
-         #dic.append({ 'topic': fetch[x]['topic'].encode('ascii', 'ignore')})
-          d = collections.OrderedDict()
-          d['id'] = int(fetch[x]['id'])
-          d['topic'] = fetch[x]['topic']
-          d['supervisor'] = fetch[x]['supervisor']
-          d['category'] = fetch[x]['category']
-          d['level'] = fetch[x]['level']
-          d['phone'] = fetch[x]['phone']
-          d['matric'] = fetch[x]['student']
-          d['session'] = fetch[x]['session']
-          dic.append(d)
+        # dic.append({ 'topic': fetch[x]['topic'].encode('ascii', 'ignore')})
+        d = collections.OrderedDict()
+        d['id'] = int(fetch[x]['id'])
+        d['topic'] = fetch[x]['topic']
+        d['supervisor'] = fetch[x]['supervisor']
+        d['category'] = fetch[x]['category']
+        d['level'] = fetch[x]['level']
+        d['phone'] = fetch[x]['phone']
+        d['matric'] = fetch[x]['student']
+        d['session'] = fetch[x]['session']
+        dic.append(d)
     result = json.dumps(dic)
     return result
 
+
 @app.route('/remove-topic/<ID>', methods=['GET'])
 def remove_topic(ID):
-
     if ID is not None:
         cursor = connection.cursor()
         sql = "DELETE FROM `topics` WHERE `id` = %s"
@@ -308,6 +336,7 @@ def remove_topic(ID):
         return msg
     else:
         return "error"
+
 
 @app.route('/view-data/<ID>', methods=['GET'])
 def view_data(ID):
@@ -320,10 +349,16 @@ def view_data(ID):
         rowcount = len(fetch)
         msg = ""
         for x in xrange(len(fetch)):
-            fetchArray.append({ 'docs' : fetch[x]['docs'].encode('ascii', 'ignore'), 'topic': fetch[x]['topic'].encode('ascii', 'ignore'), 'matric': fetch[x]['matric'].encode('ascii', 'ignore'), 'supervisor' : fetch[x]['supervisor'].encode('ascii', 'ignore'), 'level': fetch[x]['level'].encode('ascii', 'ignore'), 'type': fetch[x]['doc_type'].encode('ascii', 'ignore')})
+            fetchArray.append({'docs': fetch[x]['docs'].encode('ascii', 'ignore'),
+                               'topic': fetch[x]['topic'].encode('ascii', 'ignore'),
+                               'matric': fetch[x]['matric'].encode('ascii', 'ignore'),
+                               'supervisor': fetch[x]['supervisor'].encode('ascii', 'ignore'),
+                               'level': fetch[x]['level'].encode('ascii', 'ignore'),
+                               'type': fetch[x]['doc_type'].encode('ascii', 'ignore')})
     else:
         msg = "ID not found !"
-    return render_template('view-data.html', data=fetchArray )
+    return render_template('view-data.html', data=fetchArray)
+
 
 @app.route('/export', methods=['GET'])
 def export():
@@ -334,7 +369,8 @@ def export():
     fetchArray = []
     for x in xrange(len(fetch)):
         fetchArray.append({'session': fetch[x]['session'].encode('ascii', 'ignore')})
-    return render_template('export.html', data=fetchArray, length = str(len(fetch)) )
+    return render_template('export.html', data=fetchArray, length=str(len(fetch)))
+
 
 @app.route('/exporter/<ID>', methods=['GET'])
 def exporter(ID):
@@ -352,16 +388,16 @@ def exporter(ID):
             rowcount = len(fetch)
             if rowcount > 0:
                 for x in xrange(len(fetch)):
-                     d = collections.OrderedDict()
-                     d['id'] = str(fetch[x]['id'])
-                     d['topic'] = fetch[x]['topic'].lower().encode('ascii', 'ignore')
-                     d['supervisor'] = fetch[x]['supervisor'].lower().encode('ascii', 'ignore')
-                     d['category'] = fetch[x]['category'].lower().encode('ascii', 'ignore')
-                     d['level'] = fetch[x]['level'].lower().encode('ascii', 'ignore')
-                     d['phone'] = fetch[x]['phone'].lower().encode('ascii', 'ignore')
-                     d['matric'] = fetch[x]['student'].lower().encode('ascii', 'ignore')
-                     d['session'] = fetch[x]['session'].encode('ascii', 'ignore')
-                     dic.append(d)
+                    d = collections.OrderedDict()
+                    d['id'] = str(fetch[x]['id'])
+                    d['topic'] = fetch[x]['topic'].lower().encode('ascii', 'ignore')
+                    d['supervisor'] = fetch[x]['supervisor'].lower().encode('ascii', 'ignore')
+                    d['category'] = fetch[x]['category'].lower().encode('ascii', 'ignore')
+                    d['level'] = fetch[x]['level'].lower().encode('ascii', 'ignore')
+                    d['phone'] = fetch[x]['phone'].lower().encode('ascii', 'ignore')
+                    d['matric'] = fetch[x]['student'].lower().encode('ascii', 'ignore')
+                    d['session'] = fetch[x]['session'].encode('ascii', 'ignore')
+                    dic.append(d)
                 result = json.dumps(dic)
         elif param == 'supervisor':
             cursor = connection.cursor()
@@ -371,16 +407,16 @@ def exporter(ID):
             rowcount = len(fetch)
             if rowcount > 0:
                 for x in xrange(len(fetch)):
-                     d = collections.OrderedDict()
-                     d['id'] = str(fetch[x]['id'])
-                     d['topic'] = fetch[x]['topic'].lower().encode('ascii', 'ignore')
-                     d['supervisor'] = fetch[x]['supervisor'].lower().encode('ascii', 'ignore')
-                     d['category'] = fetch[x]['category'].lower().encode('ascii', 'ignore')
-                     d['level'] = fetch[x]['level'].lower().encode('ascii', 'ignore')
-                     d['phone'] = fetch[x]['phone'].lower().encode('ascii', 'ignore')
-                     d['matric'] = fetch[x]['student'].lower().encode('ascii', 'ignore')
-                     d['session'] = fetch[x]['session'].encode('ascii', 'ignore')
-                     dic.append(d)
+                    d = collections.OrderedDict()
+                    d['id'] = str(fetch[x]['id'])
+                    d['topic'] = fetch[x]['topic'].lower().encode('ascii', 'ignore')
+                    d['supervisor'] = fetch[x]['supervisor'].lower().encode('ascii', 'ignore')
+                    d['category'] = fetch[x]['category'].lower().encode('ascii', 'ignore')
+                    d['level'] = fetch[x]['level'].lower().encode('ascii', 'ignore')
+                    d['phone'] = fetch[x]['phone'].lower().encode('ascii', 'ignore')
+                    d['matric'] = fetch[x]['student'].lower().encode('ascii', 'ignore')
+                    d['session'] = fetch[x]['session'].encode('ascii', 'ignore')
+                    dic.append(d)
                 result = json.dumps(dic)
         elif param == 'platform':
             cursor = connection.cursor()
@@ -390,16 +426,16 @@ def exporter(ID):
             rowcount = len(fetch)
             if rowcount > 0:
                 for x in xrange(len(fetch)):
-                     d = collections.OrderedDict()
-                     d['id'] = str(fetch[x]['id'])
-                     d['topic'] = fetch[x]['topic'].lower().encode('ascii', 'ignore')
-                     d['supervisor'] = fetch[x]['supervisor'].lower().encode('ascii', 'ignore')
-                     d['category'] = fetch[x]['category'].lower().encode('ascii', 'ignore')
-                     d['level'] = fetch[x]['level'].lower().encode('ascii', 'ignore')
-                     d['phone'] = fetch[x]['phone'].lower().encode('ascii', 'ignore')
-                     d['matric'] = fetch[x]['student'].lower().encode('ascii', 'ignore')
-                     d['session'] = fetch[x]['session'].encode('ascii', 'ignore')
-                     dic.append(d)
+                    d = collections.OrderedDict()
+                    d['id'] = str(fetch[x]['id'])
+                    d['topic'] = fetch[x]['topic'].lower().encode('ascii', 'ignore')
+                    d['supervisor'] = fetch[x]['supervisor'].lower().encode('ascii', 'ignore')
+                    d['category'] = fetch[x]['category'].lower().encode('ascii', 'ignore')
+                    d['level'] = fetch[x]['level'].lower().encode('ascii', 'ignore')
+                    d['phone'] = fetch[x]['phone'].lower().encode('ascii', 'ignore')
+                    d['matric'] = fetch[x]['student'].lower().encode('ascii', 'ignore')
+                    d['session'] = fetch[x]['session'].encode('ascii', 'ignore')
+                    dic.append(d)
                 result = json.dumps(dic)
         elif param == 'level':
             cursor = connection.cursor()
@@ -409,19 +445,28 @@ def exporter(ID):
             rowcount = len(fetch)
             if rowcount > 0:
                 for x in xrange(len(fetch)):
-                     d = collections.OrderedDict()
-                     d['id'] = str(fetch[x]['id'])
-                     d['topic'] = fetch[x]['topic'].lower().encode('ascii', 'ignore')
-                     d['supervisor'] = fetch[x]['supervisor'].lower().encode('ascii', 'ignore')
-                     d['category'] = fetch[x]['category'].lower().encode('ascii', 'ignore')
-                     d['level'] = fetch[x]['level'].lower().encode('ascii', 'ignore')
-                     d['phone'] = fetch[x]['phone'].lower().encode('ascii', 'ignore')
-                     d['matric'] = fetch[x]['student'].lower().encode('ascii', 'ignore')
-                     d['session'] = fetch[x]['session'].encode('ascii', 'ignore')
-                     dic.append(d)
+                    d = collections.OrderedDict()
+                    d['id'] = str(fetch[x]['id'])
+                    d['topic'] = fetch[x]['topic'].lower().encode('ascii', 'ignore')
+                    d['supervisor'] = fetch[x]['supervisor'].lower().encode('ascii', 'ignore')
+                    d['category'] = fetch[x]['category'].lower().encode('ascii', 'ignore')
+                    d['level'] = fetch[x]['level'].lower().encode('ascii', 'ignore')
+                    d['phone'] = fetch[x]['phone'].lower().encode('ascii', 'ignore')
+                    d['matric'] = fetch[x]['student'].lower().encode('ascii', 'ignore')
+                    d['session'] = fetch[x]['session'].encode('ascii', 'ignore')
+                    dic.append(d)
                 result = json.dumps(dic)
             rowcount = 0
+        path = "result"
+        csv_columns = ['id', 'topic', 'supervisor', 'category', 'level', 'phone', 'matric', 'session']
+        with open(unicode(path + ".csv"), 'w') as stream:
+            writer = csv.DictWriter(stream, fieldnames=csv_columns)
+            writer.writeheader()
+            for data in result:
+                writer.writerow(data)
+
         return result
+
 
 @app.route('/get-option/<opt>', methods=['GET'])
 def get_option(opt):
@@ -433,21 +478,22 @@ def get_option(opt):
     rowcount = len(fetch)
     if rowcount > 0:
         for x in xrange(len(fetch)):
-             d = collections.OrderedDict()
-             d['id'] = str(fetch[x]['id'])
-             d['topic'] = fetch[x]['topic'].lower().encode('ascii', 'ignore')
-             d['supervisor'] = fetch[x]['supervisor'].lower().encode('ascii', 'ignore')
-             d['category'] = fetch[x]['category'].lower().encode('ascii', 'ignore')
-             d['level'] = fetch[x]['level'].lower().encode('ascii', 'ignore')
-             d['phone'] = fetch[x]['phone'].lower().encode('ascii', 'ignore')
-             d['matric'] = fetch[x]['student'].lower().encode('ascii', 'ignore')
-             d['session'] = fetch[x]['session'].encode('ascii', 'ignore')
-             dic.append(d)
+            d = collections.OrderedDict()
+            d['id'] = str(fetch[x]['id'])
+            d['topic'] = fetch[x]['topic'].lower().encode('ascii', 'ignore')
+            d['supervisor'] = fetch[x]['supervisor'].lower().encode('ascii', 'ignore')
+            d['category'] = fetch[x]['category'].lower().encode('ascii', 'ignore')
+            d['level'] = fetch[x]['level'].lower().encode('ascii', 'ignore')
+            d['phone'] = fetch[x]['phone'].lower().encode('ascii', 'ignore')
+            d['matric'] = fetch[x]['student'].lower().encode('ascii', 'ignore')
+            d['session'] = fetch[x]['session'].encode('ascii', 'ignore')
+            dic.append(d)
         result = json.dumps(dic)
     rowcount = 0
     return result
 
-@app.route('/print', methods = ['GET','POST'])
+
+@app.route('/print', methods=['GET', 'POST'])
 def print_stuff():
     fetchArray = []
     lv = ''
@@ -460,16 +506,16 @@ def print_stuff():
             option = request.form['option'].encode('ascii', 'ignore')
             export = request.form['export'].encode('ascii', 'ignore')
             scss += select
-            #lv += 'First Found'
+            # lv += 'First Found'
             sql = 'SELECT * FROM `topics` WHERE session=%s AND ' + option + '=%s'
             cursor.execute(sql, (select, export))
         elif request.form['option'] == 'supervisor':
             select = request.form['selection'].encode('ascii', 'ignore')
             option = request.form['option'].encode('ascii', 'ignore')
             export = request.form['export'].encode('ascii', 'ignore')
-            level  = request.form['level'].encode('ascii', 'ignore')
+            level = request.form['level'].encode('ascii', 'ignore')
             scss += select
-            #lv += 'Found Here'
+            # lv += 'Found Here'
             if level == 'ALL':
                 sql = 'SELECT * FROM `topics` WHERE session=%s AND supervisor=%s ORDER BY level'
                 cursor.execute(sql, (select, export))
@@ -493,12 +539,17 @@ def print_stuff():
     rowcount = len(fetch)
 
     for x in xrange(len(fetch)):
-        fetchArray.append({ 'topic': fetch[x]['topic'].encode('ascii', 'ignore'), 'student': fetch[x]['student'].encode('ascii', 'ignore'), 'supervisor' : fetch[x]['supervisor'].encode('ascii', 'ignore'), 'level': fetch[x]['level'].encode('ascii', 'ignore'), 'phone': fetch[x]['phone'].encode('ascii', 'ignore'),'category' : fetch[x]['category'].encode('ascii', 'ignore')})
-    #return request.form['option'] +', ' + request.form['level']
-    return render_template('print.html', row = rowcount, array=fetchArray, session= scss )
+        fetchArray.append({'topic': fetch[x]['topic'].encode('ascii', 'ignore'),
+                           'student': fetch[x]['student'].encode('ascii', 'ignore'),
+                           'supervisor': fetch[x]['supervisor'].encode('ascii', 'ignore'),
+                           'level': fetch[x]['level'].encode('ascii', 'ignore'),
+                           'phone': fetch[x]['phone'].encode('ascii', 'ignore'),
+                           'category': fetch[x]['category'].encode('ascii', 'ignore')})
+    # return request.form['option'] +', ' + request.form['level']
+    return render_template('print.html', row=rowcount, array=fetchArray, session=scss)
 
 
-@app.route('/excel', methods = ['GET', 'POST'])
+@app.route('/excel', methods=['GET', 'POST'])
 def excel_stuff():
     fetchArray = []
     lv = ''
@@ -514,30 +565,33 @@ def excel_stuff():
     a = ''
     for x in split_str:
         if x != '':
-            matchObj = re.match( r'\w', content, re.M|re.I)
-            #split_pipe = x.split('-')
-            #column = split_pipe.split(',')
-            #csv.write(column)
+            matchObj = re.match(r'\w', content, re.M | re.I)
+            # split_pipe = x.split('-')
+            # column = split_pipe.split(',')
+            # csv.write(column)
             a += str(matchObj) + '<br>'
     return a + "<br><a href='/static/tester.csv'>click here</a>"
 
-@app.route('/update_topic', methods = ['POST','GET'])
+
+@app.route('/update_topic', methods=['POST', 'GET'])
 def update_topic():
-    #name = "a"
+    # name = "a"
     cursor = connection.cursor()
     if request.method == 'POST':
-        topic    = request.form['topic'].encode('ascii', 'ignore')
-        level    = request.form['level'].encode('ascii', 'ignore')
-        superv   = request.form['supervisor'].encode('ascii', 'ignore')
-        matric   = request.form['matric'].encode('ascii', 'ignore')
-        sess     = request.form['sess'].encode('ascii', 'ignore')
+        topic = request.form['topic'].encode('ascii', 'ignore')
+        level = request.form['level'].encode('ascii', 'ignore')
+        superv = request.form['supervisor'].encode('ascii', 'ignore')
+        matric = request.form['matric'].encode('ascii', 'ignore')
+        sess = request.form['sess'].encode('ascii', 'ignore')
         platform = request.form['platform'].encode('ascii', 'ignore')
-        phone    = request.form['phone'].encode('ascii', 'ignore')
-        _id      = request.form['id'].encode('ascii', 'ignore')
+        phone = request.form['phone'].encode('ascii', 'ignore')
+        _id = request.form['id'].encode('ascii', 'ignore')
 
-        sql = 'UPDATE `topics` SET topic=%s,student=%s,supervisor=%s,category=%s,phone=%s,session=%s,level=%s WHERE id=%s'
+        sql = 'UPDATE `topics` SET topic=%s,student=%s,supervisor=%s,category=%s,phone=%s,session=%s,' \
+              'level=%s WHERE id=%s'
         cursor.execute(sql, (topic, matric, superv, platform, phone, sess, level, _id))
         return "done"
+
 
 @app.route('/seminar')
 def seminar():
@@ -551,9 +605,10 @@ def seminar():
     sql = cursor.execute("SELECT * FROM seminar_topics ORDER BY id DESC")
     fetch = cursor.fetchall()
     rowcount = int(len(fetch))
-    return render_template('seminar.html', rows = rowcount, result = fetch, status = status)
+    return render_template('seminar.html', rows=rowcount, result=fetch, status=status)
 
-@app.route('/save_seminar', methods = ['POST', 'GET'])
+
+@app.route('/save_seminar', methods=['POST', 'GET'])
 def save_seminar():
     if request.method == 'POST':
         topic = request.form['topic']
@@ -565,40 +620,49 @@ def save_seminar():
         supervisor = request.form['supervisor']
 
         cursor = connection.cursor()
-        sql = cursor.execute("SELECT * FROM seminar_topics WHERE topic=%s", ( topic ) )
+        sql = cursor.execute("SELECT * FROM seminar_topics WHERE topic=%s", (topic))
         fetch = cursor.fetchall()
         rowcount = int(len(fetch))
         if rowcount > 0:
             return redirect(url_for('seminar', rel="exist"))
         else:
             cur = connection.cursor()
-            seminar_query = cur.execute( "INSERT INTO seminar_topics(topic, student, supervisor, name, phone, session, level) VALUES(%s, %s, %s, %s, %s, %s, %s)", ( topic, student, supervisor, student, phone, sess, level ))
+            seminar_query = cur.execute(
+                "INSERT INTO seminar_topics(topic, student, supervisor, name, phone, session, level) "
+                "VALUES(%s, %s, %s, %s, %s, %s, %s)",
+                (topic, student, supervisor, student, phone, sess, level))
             connection.commit()
             return redirect(url_for('seminar', rel='saved'))
 
-@app.route('/delete_seminar', methods = ['GET'])
+
+@app.route('/delete_seminar', methods=['GET'])
 def delete_seminar():
     id = request.args.get('id')
     cursor = connection.cursor()
     sql = cursor.execute("DELETE FROM seminar_topics WHERE id=%s", (id))
     return 'done'
 
-@app.route('/lecturer', methods = ['GET'])
+
+@app.route('/lecturer', methods=['GET'])
 def lecture():
     return render_template('lecture.html')
+
 
 @app.route('/sign-out')
 def signout():
     session.pop('adminkey', None)
     return redirect(url_for('login'))
 
+
 @app.errorhandler(500)
 def internal_error(error):
-  return "500 error"
+    return "500 error"
+
 
 @app.errorhandler(404)
 def not_found(error):
-  return "404 error",404
+    return "404 error", 404
 
-if __name__== "__main__":
+
+if __name__ == "__main__":
     app.run(debug=True)
