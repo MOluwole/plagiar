@@ -1,0 +1,39 @@
+{% include 'header.html' %}
+<title> Plagiarism Checker ::Dashboard </title>
+
+  <script src="{{ url_for('static', filename='scripts/jquery.js')}}"></script>
+   <script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script>
+</head>
+<body>
+   {% if data %}
+   {% for result in data %}
+   <h3 class="Raleway red-text" style="text-align:center">{{ result.topic }} </h3>
+   <table align="center" style="width: 50% !important" class="bordered">
+      <tr>
+        <th> Student Matric No. </th>
+        <th> {{ result.matric}}</th>
+      </tr>
+      <tr>
+         <th> Student Level </th>
+         <th> {{ result.level}} </th>
+      </tr>
+      <tr>
+         <th> Supervisor </th>
+         <th> {{ result.supervisor}} </th>
+      </tr>
+      <tr>
+         <th> Project Category </th>
+         <th> {{ result.type}} </th>
+      </tr>
+   </table>
+   <div style="padding: 20px;background: #333;color: #FFF;text-align:justify">
+   <p>{{ result.docs}}</p>
+   <br>
+      <center> <button class="btn-flat red white-text" onclick="window.close()"><i class="fa fa-times"></i> Close </button></center>
+ </div>
+   {% endfor %}
+   {% endif %}
+   <br>
+
+</body>
+</html>

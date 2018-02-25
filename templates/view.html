@@ -1,0 +1,85 @@
+
+{% include 'header.html' %}
+<title> Plagiarism Checker ::Dashboard </title>
+
+  <script src="{{ url_for('static', filename='scripts/jquery.js')}}"></script>
+   <script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/app.js')}}"></script>
+
+<script>
+  $(document).ready(function() {
+
+      Materialize.updateTextFields();
+      $('select').material_select();
+      var app = new App();
+      app.add_new();
+  });
+
+
+</script>
+ 
+
+</head>
+
+<body>
+
+  <div class="">
+
+   {% include "navigation.html" %}
+    <div class="row">
+
+
+    <div class="col s6 offset-s3">
+      <div class="inner-design">
+        <h3 class="pink-text Raleway">Review Write Up </h3>
+      </div>
+      <br>
+      {% include "auth.html" %}
+      <br>
+
+      {% if rowcount == 0 %}
+
+       <h4 class="grey-text"> No Record Found </h4>
+
+      {% else %}
+
+       <b class="green-text"><small>TOTAL RECORD: {{ rowcount }} </small></b>
+       <div class="divider"></div>
+        <table class="striped" id="example">
+          <tr>
+              <th > Topic</th>
+              <th > Heading </th>
+              <th> Matric No. </th>
+              <th> Level </th>
+              <th > Supervisor </th>
+              <th> Option </th>
+          </tr>
+          {% for x in doc %}
+           <tr>
+               <td valign="top"><small> {{ x.topic.upper() }} </small></td>
+               <td> {{ x.doc_type }}</td>
+               <td> {{ x.matric }} </td>
+               <td> {{ x.level }} </td>
+               <td> {{ x.supervisor}} </td>
+               <td> <a href="#" class="green-text open" data-id="{{x.id}}" title="view project content"><i class="fa fa-chevron-circle-right"></i></a> /
+                  <a href="#" class="red-text del" data-id="{{x.id}}" title="delete"><i class="fa fa-info-circle"></i></a> </td>
+           </tr>
+          {% endfor %}
+        </table>
+
+      {% endif %}
+
+      <br><br>
+      <a href="/">Home </a> &copy;
+ <br>
+ <br>
+
+
+      <br>
+
+
+    </div>
+    </div>
+  </div>
+</body>
+</html>

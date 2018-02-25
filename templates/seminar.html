@@ -1,0 +1,176 @@
+ {% include 'header.html' %}
+<title> Plagiarism Checker ::Dashboard </title>
+
+<!-- <script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/app.js')}}"></script> -->
+<!-- <script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script> -->
+
+<!-- <script src="{{ url_for('static', filename='scripts/jquery.js')}}"></script> -->
+
+{% if status == 'exist' %}
+  <script>
+    alert('Seminar Topic Already Exist !');
+    window.location = '/seminar';
+  </script>
+{% elif status == 'saved' %}
+  <script>
+    alert('Record Saved Successfully !');
+    window.location = '/seminar';
+  </script>
+{% endif %}
+
+<script>
+  $(function() {
+    var date = new Date(),
+      year = date.getFullYear(),
+      next_format = year + 1,
+      html = '';
+
+    for (var y = next_format; y >= 2010; y--) {
+      var f = (y - 1) + '/' + y;
+      html += '<option value="' + f + '">' + f + '</option>'
+    }
+
+    $('#select-option')
+    .html('<select class="browser-default" name="session"><option value="0">select </option>' + html + '</select>')
+
+    $('.delete-it').on('click', function(e) {
+      var ID = $(this).attr('data-id');
+      var conf = window.confirm("Are you sure you want to delete ?");
+      if(conf) {
+        $.get('/delete_seminar?id=' + ID).then((resp) => {
+          window.location.reload();
+        }).catch((err) => {
+          alert('Unable to Connect to Server !');
+        })
+      }
+    })
+  })
+</script>
+</head>
+
+<body>
+
+  <div class="">
+
+    {% include "navigation.html" %}
+
+    <div class="row">
+      <div class="col s7 offset-s3">
+        <div class="inner-design">
+          <h3 class="pink-text Raleway"> Welcome to Admin Dashboard </h3>
+        </div>
+        <h3> Seminar Topics</h3>
+        <br> {% include "auth.html" %}
+        <br>
+        <div>
+          <button class="btn btn-flat black white-text" id="add-new"> Add New + </button> <br>
+          <div style="display:none" id="preview">
+
+            <form method="POST" action="/save_seminar">
+              <h3> Add New </h3>
+              <label> Topic </label>
+              <input type="text" name="topic" required>
+
+              <div class="input-field col s12">
+                <input type="text" required name="supervisor" />
+                <label for="supervisor">Supervisor Name </label>
+              </div>
+
+              <div class="input-field col s12">
+                <!-- <select class="browser-default" required name="session" id="session-option">
+              <option value=""> select </option>
+            </select> -->
+                <div id="select-option"></div>
+              </div>
+
+              <div class="input-field col s12">
+                <input type="text" placeholder="" name="student_name" required>
+                <label for="student_name">Student Name </label>
+              </div>
+              <div class="input-field col s12">
+                <input type="text" placeholder="" name="matric" required>
+                <label for="matric">Matric No. </label>
+              </div>
+
+              <div class="input-field col s12">
+                <input type="text" placeholder="" name="phone" required>
+                <label for="phone">Phone Number </label>
+              </div>
+
+              <div class="input-field col s12">
+                <select class="browser-default" required name="level">
+              <option value=" "> --select Level --</option>
+              <option value="ND">ND </option>
+              <option value="HND">HND </option>
+            </select>
+              </div>
+
+              <br> <br>
+              <p>&nbsp;</p>
+              <button class="btn btn-flat black white-text" type="submit"> Submit </button>
+              <p>&nbsp;</p>
+
+            </form>
+          </div>
+        </div>
+        {% if rows > 0 %}
+        <table width="100%" align="center" class="display table" cellspacing="0" width="100%" id="example1">
+          <thead bgcolor="#DDD">
+            <tr>
+              <th> Topic </th>
+              <th> Platform </th>
+              <th> Supervisor </th>
+              <th> Level </th>
+              <th> Phone </th>
+              <th> Date</th>
+              <th> &nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for x in result %}
+            <tr>
+              <td> {{ x['topic']}}</td>
+              <td> {{ x['student']}} </td>
+              <td> {{ x['phone']}}</td>
+              <td> {{ x['session'] }}</td>
+              <td> {{ x['level']}} </td>
+              <td> {{ x['datetim']}} </td>
+              <td> <a href="#" style="color: red" class="delete-it" data-id="{{ x['id']}}"><i class="fa fa-times"></i></a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <h3 style="color: #666"> No Seminar Topic Yet </h3> {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+  <script src="{{ url_for('static', filename='scripts/jquery.js')}}"></script>
+  <script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='scripts/datatables.min.js')}}"></script>
+  <script>
+    $(document).ready(function() {
+      $('#example1').DataTable({
+        stateSave: true
+      });
+      var i = 0;
+      $('#add-new').click(function() {
+        if (i == 0) {
+          i = 1;
+          $(this).text('CLOSE PANEL -');
+          $('#preview').slideDown('slow');
+        } else if( i == 1) {
+          i = 0;
+          $(this).text('ADD NEW +');
+          $('#preview').slideUp('slow');
+        }
+
+      })
+    });
+  </script>
+</body>
+
+</html>

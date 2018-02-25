@@ -1,0 +1,37 @@
+ <table class="striped">
+       <tr>
+         <th width="10%"> ID </th>
+         <th width="80%"> Document Type </th>
+         <th width="10%"> Document </th>
+       </tr>     
+       {% for i in data %}
+       <tr>
+         <td> {{ i['id'] }} </td>
+         <td> {{ i['docs'].encode('ascii', 'ignore') }} </td>
+         <td> {{ i['doc_type'].encode('ascii', 'ignore') }} </td>
+        </tr>
+      {% endfor %}
+       </table>
+
+
+
+
+
+     for row in result:
+        prt += row['docs'].encode('ascii', 'ignore') + '---'
+        doc = row['docs'].encode('ascii', 'ignore').lower()
+        explode = doc.split('.')
+        dictname.append('docs:' + doc )
+        for i in xrange(len(explode)):
+          for x in xrange(len(new_doc)):
+            if new_doc[x].strip() == explode[i].strip():
+              found.append(explode[x].strip())
+  else:
+
+
+        
+      """ This is for the new Doc... """
+      for doc in xrange(len(new_doc)):  
+        found.append(new_doc[doc].strip())
+
+      """ End New Doc """  

@@ -1,0 +1,121 @@
+
+{% include 'header.html' %}
+<title> Plagiarism Checker ::Dashboard </title>
+
+<script src="{{ url_for('static', filename='scripts/jquery.js')}}"></script>
+<script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/app.js')}}"></script>
+<script>
+    $(document).ready(function() {
+
+     $('#optn').change(function() {
+       data = $(this).val()
+       extra = $('#xtra')
+       if ( data === 'level' ) {
+         extra.html('  <br><div><div> Level </div><select class="browser-default" name="export" style="border: 1px solid #999" id="export_with"><option value="0"> -select- </option>'+
+             '<option value="ND"> ND </option><option value="HND"> HND </option>'+
+           '</select></div>')
+       } else if ( data === 'supervisor' ) {
+         str = ''
+
+         $.getJSON('/get-option/'+data, function( callback ) {
+           str = ''
+           $.each(callback, function(key, value) {
+             //console.log(value)
+             str += '<option value="'+value.supervisor+'">'+value.supervisor.toUpperCase()+'</option>'
+           })
+           extra.html('  <br> <div><div> Level </div>' +
+           '<select class="browser-default" name="level" style="border: 1px solid #999" id="export_with" required>'+
+               '<option value="ALL"> ALL </option><option value="ND"> ND </option><option value="HND">HND</option>' +
+             '</select> <br><div><div> Supervisor </div><select class="browser-default" name="export" style="border: 1px solid #999" id="export_with">'+
+               '<option value="0"> -select- </option>' + str +
+             '</select> </div>')
+         })
+       } else if ( data == 'category' ) {
+         str = ''
+
+         $.getJSON('/get-option/category', function( callback ) {
+           str = ''
+           $.each(callback, function(key, value) {
+             //console.log(value)
+             str += '<option value="'+value.category+'">'+value.category.toUpperCase()+'</option>'
+           })
+           extra.html('  <br><div"><div> Supervisor </div><select class="browser-default" name="export" style="border: 1px solid #999" id="export_with">'+
+               '<option value="0"> -select- </option>' + str +
+             '</select></div>')
+         })
+       }
+     })
+     ;
+
+    $('#form__refresh').on('click', function(e) {
+      e.preventDefault()
+      window.location.reload()
+    })
+  });
+</script>
+
+</head>
+
+<body>
+
+  <div class="">
+
+   {% include "navigation.html" %}
+
+    <div class="row">
+
+    <div class="col s8 offset-s3">
+      <div class="inner-design">
+        <h3 class="pink-text Raleway"> Export </h3>
+
+      </div>
+      <br>
+      {% include "auth.html" %}
+      <br>
+
+      <form method="POST" action="/print" id="form__submit">
+        <div class="input-field col s5">
+          <div>Session </div>
+          <select class="browser-default" name="selection" style="border: 1px solid #999" id="export_by">
+            {% if length > 0 %}
+             {% for i in data %}
+               <option value="{{i.session}}">{{i.session}} </option>
+              {% endfor %}
+            {% elif length == '0' %}
+            <option value="0">N/A</option>
+            {% endif %}
+          </select>
+        <br>
+        <div> Option </div>
+        <select class="browser-default" name="option" style="border: 1px solid #999" id="optn">
+          <option value="0"> select </option>
+          <option value="supervisor">SUPERVISOR</option>
+          <option value="category">PLATFORM</option>
+          <option value="level">LEVEL</option>
+        </select>
+
+        <span id="xtra">&nbsp;</span>
+        <br>
+        <button type="submit" name="button" class="btn green" id="search">
+          Export <i class="fa fa-search"></i>
+        </button>
+        <button name="button" class="btn grey" id="form__refresh">
+          Refresh <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+      <p>&nbsp;</p>
+      <br><br>
+      <div class="loader" style="display:none;background: #ddd">
+        <img src="{{ url_for('static', filename='images/loading-32-v1.gif')}}" border="0">
+      </div>
+    </form>
+      <br>
+
+    </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script>
+</body>
+</html>

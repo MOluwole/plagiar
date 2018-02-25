@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+
+
+
+<title> Plagiarism Checker ::Dashboard </title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/datatables.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootflat.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/font-awesome.min.css')}}">
+  <style media="screen">
+
+    th {
+      text-align: left;
+      font-size: 14px;
+    }
+    table td {
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container" style="width: 70%;margin: auto;">
+    <div>
+      <h2 style="color: #666"> Print Page </h2>
+      <div class="row">
+      <div class="col s3">
+        <form method="POST" action="/excel">
+          <a href="javascript:history.back()" style="color: #000"><i class="fa fa-arrow-left"></i> Go back </a> &nbsp;
+          <a href="#" onclick="javascript:window.print()" style="color: #000">
+            <b><i class="fa fa-print"></i> Print Now <small> (ctrl + p) </small></b>
+          </a>
+          &nbsp; &nbsp;
+          <select name="option" style="border: 1px solid #999;padding: 5px;width: 150px;background: #FFF" id="optn" required>
+            <option value="0"> Export </option>
+            <option value="/excel">Excel</option>
+          </select>
+          <button type="submit"> Go </button>
+          <textarea name="content" style="visibility: hidden">
+            {% for i in array %}
+              {{ i.topic.capitalize() }}-{{ i.category.lower()}}-{{ i.supervisor.upper()}},-{{ i.level.upper()}}-{{ i.phone }}-{{ i.student}}\n
+            {% endfor %}
+          </textarea>
+         
+        </form>
+      </div>
+    </div>
+  </div>
+  <h6><b style="color: green"> Total Record: {{ row }} &nbsp; / &nbsp; Session: {{ session}}</b></h6>
+
+    {% if row > 0 %}
+    <div >
+      <table width="100%" align="center" class="display table" cellspacing="0" width="100%" id="example">
+        <thead bgcolor="#DDD">
+          <tr>
+            <th> Topic </th>
+            <th> Platform </th>
+            <th> Supervisor </th>
+            <th> Level </th>
+            <th> Phone </th>
+            <th > Matric No </th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in array %}
+          <tr >
+            <td>
+              {{ i.topic.capitalize() }}
+            </td>
+            <td> {{ i.category.lower()}}</td>
+            <td> <small>{{ i.supervisor.upper()}} </small></td>
+            <td> {{ i.level.upper()}} </td>
+            <td> {{ i.phone }} </td>
+            <td> {{ i.student}} </td>
+          </tr>
+        {% endfor %}
+          </tbody>
+      </table>
+    </div>
+    {% else %}
+      <h3 class="red-text"> No Record Found </h3>
+    {% endif %}
+
+  </div>
+  <p>&nbsp;</p>
+  <script src="{{ url_for('static', filename='scripts/jquery.js')}}"></script>
+  <script src="{{ url_for('static', filename='scripts/datatables.min.js')}}"></script>
+
+  <script>
+
+    $(document).ready(function() {
+        $('#example').DataTable( {
+            stateSave: true
+        } );
+    });
+ 
+  </script>
+</body>
+</html>

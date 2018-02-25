@@ -1,0 +1,129 @@
+
+{% include 'header.html' %}
+<title> Plagiarism Checker ::Dashboard </title>
+
+  <script src="{{ url_for('static', filename='scripts/jquery.js')}}"></script>
+   <script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/app.js')}}"></script>
+
+<script>
+  $(document).ready(function() {
+
+      Materialize.updateTextFields();
+      $('select').material_select();
+      var app = new App();
+      app.add_new();
+      app.max_character('#txt', 65000);
+  });
+
+</script>
+</head>
+
+<body>
+
+  <div class="">
+
+   {% include "navigation.html" %}
+    <div class="row">
+
+
+    <div class="col s6 offset-s3">
+      <div class="inner-design">
+        <h3 class="pink-text Raleway"> Add Project Write Up </h3>
+      </div>
+      <br>
+    {% include "auth.html" %}
+      <br>
+
+    <p>
+        <b class="red-text">Note: </b>
+        Please copy and paste the write up into the textarea below, then fill other fields before clicking on save button.
+    </p>
+
+
+  <div class="row">
+    <div class="input-field col s12">
+      <input type="text" placeholder="secured web based todo app" id="topic" required class="topic_search" spellcheck="false" autocomplete="off">
+      <label for="topic"> Project Topic </label>
+      <div class="topic-search-ii"></div>
+    </div>
+
+    <div class="input-field col s12">
+      <input type="text" placeholder="John Doe" id="supervisor" required>
+      <label for="supervisor"> Super Visor</label>
+    </div>
+
+    <div class="input-field col s12">
+      <input type="text" placeholder="2017" id="year" required>
+      <label for="year"> Year </label>
+    </div>
+
+    <div class="input-field col s12">
+      <select name="level" class="browser-default" id="level" required data-id='true'>
+        <option value="0"> -- Level select --</option>
+        <option value="ND">ND</option>
+        <option value="HND">HND</option>
+      </select>
+    </div>
+    <p>
+      &nbsp;
+    </p>
+
+    <div class="input-field col s12">
+      <input type="text" placeholder="00/69/000, 00/69/0000" id="matric" required>
+      <label for="matric"> Matric No. <small><b class="red-text">(add comma if its a group project)</b></small> </label>
+    </div>
+
+    <div class="input-field col s12">
+   <select name="doc_type[]" class="typer browser-default" id="doc" required data-id='true'>
+     <option value="0"> --select --</option>
+     <option value="introduction">Introduction </option>
+     <option value="methodology">Methodology</option>
+     <option value="conclusion">Conclusion</option>
+   </select>
+    <!-- <label for="doc"> Select Document Type </label> -->
+    </div>
+
+    <div class="input-field col s12">
+
+    <textarea class="materialize-textarea doc" name="document[]" data-id='true' id="txt" required></textarea>
+    <label for="txt">Project Write Up </label>
+      <small>Characters: <span data-list="#txt" >0</span> /65,000</small>
+    </div>
+
+    <div class="input-field col s12" id="show-more">
+    </div>
+
+    <a class="btn-flat waves-effect waves-light red" title="clicking on this button shows that you want to add more of this student write up" id="add-new"><i class="fa fa-plus-circle"></i> Add More </a>
+
+  </div>
+
+    <br>
+
+    <button id="projectSubmit" class=" waves-effect waves-light btn-flat pink white-text">
+     <i class="fa fa-floppy-o"></i> Save
+    </button>
+
+    <button type="reset" class="waves-effect waves-light btn-flat black">
+     <i class="fa fa-times"></i> Cancel
+    </button>
+
+
+      <br><br>
+      <a href="/">Home </a> &copy;
+ <br>
+ <br>
+
+ <p>
+     {{ data }}
+ </p>
+
+      <br>
+
+
+    </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,291 @@
+
+{% include 'header.html' %}
+<title> Plagiarism Checker ::Dashboard </title>
+
+<script src="{{ url_for('static', filename='scripts/jquery.js')}}"></script>
+<script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/app.js')}}"></script>
+<script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script>
+<script>
+    $(document).ready(function() {
+     var app = new App();
+     app.add_topic();
+     //Modal triggered here
+
+     $('.modal1').click(function() {
+       var _id, data_topic, data_category,
+       data_supervisor, data_matric,
+       data_session, data_level, data_phone;
+
+       _id = $(this).attr('did');
+       data_topic     = $(this).attr('data_topic');
+       data_category  = $(this).attr('data_category');
+       data_supervisor= $(this).attr('data_supervisor');
+       data_matric    = $(this).attr('data_matric');
+       data_session   = $(this).attr('data_session');
+       data_level     = $(this).attr('data_level');
+       data_phone     = $(this).attr('data_phone');
+
+       var lv = 2010;
+       var currenty = new Date().getFullYear();
+       var htm = '';
+       for(var i=lv;i<= currenty; i++) {
+         htm += "<option value='"+ (i-1) +"/" + i +"'>"+ (i-1) +"/" + i + "</option>";
+       }
+       $('#ssd1').html("<select class='browser-default' id='session_modal'>"+ htm + "</select>");
+
+       $('.modal').modal({
+          dismissible: true, // Modal can be dismissed by clicking outside of the modal
+          opacity: .5, // Opacity of modal background
+          in_duration: 300, // Transition in duration
+          out_duration: 200, // Transition out duration
+          starting_top: '4%', // Starting top style attribute
+          ending_top: '10%', // Ending top style attribute
+          ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+            $('#id_modal').val( _id );
+            $('#topic_modal').val( data_topic );
+            $('#matric_modal').val( data_matric );
+            $('#super_modal').val( data_supervisor );
+            $('#phone_modal').val( data_phone );
+            $('#platform_modal').append( "<option selected value='"+data_category+"'>" + data_category +"</option>" );
+            $('#session_modal').append( "<option selected value='"+data_session+"'>" + data_session +"</option>" );
+            $('#level_modal').val( data_level );
+          }
+        });
+     });
+
+     $('#btn-save').click(function(e) {
+       var topic, matric, super_, phone, platform, sess, level, id;
+       id     = $('#id_modal');
+       topic  = $('#topic_modal');
+       matric = $('#matric_modal');
+       super_ = $('#super_modal');
+       level  = $('#level_modal');
+       sess   = $('#session_modal');
+       platform = $('#platform_modal');
+       phone    = $('#phone_modal');
+
+       if( topic.val() === '' ) {
+        topic.focus();
+        return false
+      } else if ( level.val() === '0' ) {
+        level.focus();
+        return false;
+      } else if( super_.val() === '' ) {
+        super_.focus();
+        return false;
+      } else if( matric.val() === '' ) {
+        matric.focus();
+        return false;
+      } else if( sess.val() === '0' ) {
+        sess.focus();
+        return false;
+      } else if( platform.val() === '0' ) {
+        platform.focus();
+        return false;
+      } else if( phone.val() === '' ) {
+        phone.focus();
+        return false;
+      } else {
+        $('#previewer').fadeIn('slow');
+        var data = 'topic=' + topic.val() + '&level='+ level.val() +'&supervisor='+super_.val() + '&matric=' + matric.val() + '&sess=' + sess.val() +'&platform=' + platform.val() +'&phone='+phone.val() + '&id='+ id.val();
+        $.post('/update_topic', data, function(html) {
+          if(html === 'done') {
+            window.location.reload();
+          } else {
+            alert('Error Occured, Please Refresh to continue !');
+          }
+          $('#previewer').fadeOut('slow');
+        })
+      }
+     });
+
+     var lv = 2010;
+     var currenty = new Date().getFullYear()+1;
+     var htm = '';
+     for(var i = currenty; i >= lv; i--) {
+       htm += "<option value='"+(i-1) +"/" + i +"'>"+ (i-1) +"/" + i + "</option>";
+     }
+     $('#ssd').html("<select class='browser-default' name='session'><option value='0'>select</option>"+ htm + "</select>");
+  });
+</script>
+
+</head>
+
+<body>
+
+  <div class="">
+
+   {% include "navigation.html" %}
+
+    <div class="row">
+
+    <div class="col s6 offset-s3">
+      <div class="inner-design">
+        <h3 class="pink-text Raleway"> Welcome to Admin Dashboard </h3>
+      </div>
+      <br>
+      {% include "auth.html" %}
+      <br>
+
+        {% if message %}
+            <h3 class="Raleway green-text">{{ message }}</h3>
+        {% endif %}
+
+
+      <form method="POST">
+      <div class="input-field col s12">
+        <input type="text" placeholder="" id="topic" name="topic" required spellcheck="false" autocomplete="off">
+        <label for="supervisor">Search Topic </label>
+      </div>
+      <p>&nbsp;</p>
+        <h5>Total Topic:  {{ rowcount }}  </h5>
+
+      <div style="display:none" id="after-preview">
+        <div class="input-field col s12">
+          <input type="text" placeholder="" id="supervisor" name="supervisor" required>
+          <label for="supervisor">SuperVisor </label>
+        </div>
+        <div class="input-field col s12">
+          <select class="browser-default" name="platform" required>
+            <option value="0"> --select Platform--</option>
+            <option value="Web development">Web Development </option>
+            <option value="Mobile development">Mobile Development </option>
+            <option value="Software development">Software Development</option>
+            <option value="Others"> Other Development </option>
+          </select>
+        </div>
+          <p> &nbsp;</p>
+
+        <div class="input-field col s12">
+          <div id="ssd"></div>
+          <!-- <input type="text" placeholder="" id="sessn" name="session" required>
+          <label for="supervisor">Session </label> -->
+        </div>
+
+        <div class="input-field col s12">
+          <select class="browser-default" required name="level" id="level">
+            <option value="0"> --select Level --</option>
+            <option value="ND">ND </option>
+            <option value="HND">HND </option>
+          </select>
+        </div>
+
+        <div class="input-field col s12">
+          <input type="text" placeholder="" id="matric" name="matric" required>
+          <label for="supervisor">Matric No. </label>
+        </div>
+
+        <div class="input-field col s12">
+          <input type="text" placeholder="" id="phone" name="phone" required>
+          <label for="supervisor">Phone Number </label>
+        </div>
+        <br>
+        <button type="submit" class="btn-flat red white-text">
+          <i class="fa fa-floppy-o"></i> Save &amp; Continue
+        </button>
+
+      </div>
+    </form>
+      <br>
+      <div class="preview">
+        {% if rows == 0 %}
+          <h3 class="Raleway grey-text">No Topic Registered </h3>
+        {% else %}
+          <table class="striped">
+            <tr><th >S/N</th>
+            <th width="30%">TOPIC </th>
+            <th >PLATFORM </th>
+            <th >SUPERVISOR</th>
+            <th >MATRIC NO.</th>
+            <th >SESSION</th>
+            <th >LEVEL</th>
+            <th> <i class="fa fa-list"></i></td></tr>
+          {% set hash = 0 %}
+          {% for x in record %}
+            <tr class="row{{x.id}}">
+              <td > # </td>
+              <td > {{ x.topic | lower }}</td>
+              <td > {{ x.category}}</td>
+              <td> {{ x.supervisor}} </td>
+              <td> {{ x.matric }} </td>
+              <td> {{ x.session }} </td>
+              <td> {{ x.level }} </td>
+              <td>
+                <a href="#modal1" class="green-text waves-effect waves-light modal1"
+                  did="{{x.id}}"
+                  data_topic="{{x.topic}}"
+                  data_category="{{x.category}}"
+                  data_supervisor="{{x.supervisor}}"
+                  data_matric="{{x.matric}}"
+                  data_session="{{x.session}}"
+                  data_level="{{x.level}}"
+                  data_phone="{{x.phone}}">
+                <i class="fa fa-edit"></i></a>
+                <a href="#" class="red-text d" data-id="{{x.id}}"><i class="fa fa-minus-circle"></i></a>
+              </td>
+            </tr>
+            {% set hash = hash + 1 %}
+          {% endfor %}
+
+        </table>
+        {% endif %}
+      </div>
+    </div>
+    </div>
+  </div>
+  <!-- Modal Trigger -->
+ <!-- Modal Structure -->
+ <div id="modal1" class="modal">
+   <div class="modal-content">
+     <h4>Edit Topic</h4>
+     <input type="text" id="id_modal" >
+     <div class="input-field col s12">
+       <input type="text" placeholder="" id="topic_modal" name="topic_modal" required>
+       <label for="supervisor">Topic </label>
+     </div>
+     <div class="input-field col s12">
+       <select class="browser-default" name="level_modal" id="level_modal">
+        <option value="0"> --select Level --</option>
+        <option value="ND">ND </option>
+        <option value="HND">HND </option>
+       </select>
+     </div>
+     <div class="input-field col s12">
+       <input type="text" placeholder="" id="super_modal" name="super_modal" required>
+       <label for="supervisor">SuperVisor </label>
+     </div>
+     <div class="input-field col s12">
+       <input type="text" placeholder="" id="matric_modal" name="matric_modal" required>
+       <label for="supervisor">Matric No. </label>
+     </div>
+     <div class="input-field col s12">
+        <div id="ssd1"></div>
+     </div>
+     <div class="input-field col s12">
+       <select class="browser-default" name="platform" id="platform_modal">
+         <option value="0"> --select Platform--</option>
+         <option value="Web development">Web Development </option>
+         <option value="Mobile development">Mobile Development </option>
+         <option value="Software development">Software Development</option>
+         <option value="Others"> Other Development </option>
+       </select>
+     </div>
+     <div class="input-field col s12">
+       <input type="text" placeholder="" id="phone_modal" name="matric" required>
+       <label for="supervisor">Phone Number </label>
+     </div>
+   </div>
+   <div class="modal-footer">
+     <span style="display:none" id="previewer"><i><small>please wait...</small></i>&nbsp;<img src="{{ url_for('static', filename='images/loading-32-v1.gif') }}" border="0"></span>
+     <button id="btn-save" class="waves-effect white-text green btn-flat">
+       Submit
+     </button>
+     <button class="modal-action modal-close white-text red waves-effect btn-flat">
+      Cancel
+     </button>
+   </div>
+ </div>
+
+</body>
+</html>

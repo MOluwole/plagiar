@@ -1,0 +1,101 @@
+
+{% include 'header.html' %}
+<title> Plagiarism Checker </title>
+
+<script src="{{ url_for('static', filename='scripts/jquery.js')}}"></script>
+<script src="{{ url_for('static', filename='scripts/materialize.min.js')}}"></script>
+
+
+<script>
+  $(document).ready(function() {
+      $('select').material_select();
+  });
+
+</script>
+</head>
+
+<body class="homeBody">
+  <form method="POST">
+  <div class="row" >
+    <br><br><br>
+
+  <div class="col s6 offset-s3 body-white animated zoomIn">
+    <h3 class="Raleway pink-text"> Plagiarism Checker </h3>
+
+   <label> Select Document Type </label>
+   <select name="doc_type" class="browser-default option-select">
+     <option value="0"> --select --</option>
+     <option value="introduction">Introduction </option>
+     <option value="methodology">Methodology</option>
+     <option value="conclusion">Conclusion</option>
+   </select>
+    <label> Enter your Document </label> <br>
+    <textarea class="materialize-textarea" name="document"></textarea>
+    <br>
+
+    <button type="submit" class="btn pink">
+      <i class="fa fa-search"></i> Check Status
+    </button>
+
+    <button class="btn black"><i class="fa fa-times"></i> Cancel </button>
+
+      </form>
+      <br><br>
+      <div class="divider"></div>
+
+      {% if test < 1 %}
+            <h6 class="red-text"><i class="fa fa-info-circle"></i> Document does not match any of our project records</h6>
+      {% endif %}
+
+      {% if counter %}
+      <br><br>
+        <h5 class="green-text">You check for this document for existence</h5>
+      {% if counter > 1 %}
+       <b class="red-text"> String Matched {{counter}}/ {{exist}} Sentences </b>
+      {% else %}
+       <b class="red-text"> String Matched {{counter}}/ {{exist}} Sentence </b>
+      {% endif %}
+      {% endif %}
+
+      {% if errmsg == 2 %}
+          <br><br>
+       <h5 class="red-text"><i class="fa fa-info-circle"></i> Please Select an option</h5>
+       {% if avg < 20 %}
+
+       {% elif avg < 20 %}
+        <h5 class="green-text">{{ avg }}% Match, Your document is free</h5>
+       {% elif avg > 100 %}
+         <h5 class="red-text">  Document Matched, the document supplied is plagiarized</h5>
+       {% else %}
+        <h5 class="red-text"> {{ avg }}% Matched, the document supplied is plagiarized</h5>
+       {% endif %}
+       {% endif %}
+
+      <div>
+        {% if data %}
+        <table class="striped">
+          <tr>
+            <th width="50%"> Content Found </th>
+            <th width="20%"> Topic </th>
+            <th width="20%"> Super Visor </th>
+            <th width="5%"> Level </th>
+            <th width="5%"> Year </th>
+
+          </tr>
+          {% for x in data %}
+          <tr>
+            <td> {{x.found}} </td>
+            <td> {{ x.topic}} </td>
+            <td >{{ x.supervisor}} </td>
+            <td> {{ x.level }}</td>
+            <td> {{ x.matric }} </td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %}
+
+      </div>
+  </div>
+  </div>
+</body>
+</html>
