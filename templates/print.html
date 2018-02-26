@@ -38,6 +38,9 @@
             <option value="/excel">Excel</option>
           </select>
           <button type="submit"> Go </button>
+            <textarea name="result" style="visibility: collapse">
+               {{ array }}
+            </textarea>
           <textarea name="content" style="visibility: hidden">
             {% for i in array %}
               {{ i.topic.capitalize() }}-{{ i.category.lower()}}-{{ i.supervisor.upper()}},-{{ i.level.upper()}}-{{ i.phone }}-{{ i.student}}\n
