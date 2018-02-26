@@ -363,7 +363,8 @@ def view_data(ID):
 @app.route('/export', methods=['GET'])
 def export():
     cursor = connection.cursor()
-    sql = "SELECT * FROM `topics` GROUP BY session"
+    sql = "SELECT * FROM `topics` GROUP BY topics.session"
+    # sql = "SELECT * FROM `topics`"
     cursor.execute(sql)
     fetch = cursor.fetchall()
     fetchArray = []
@@ -539,38 +540,34 @@ def print_stuff():
     rowcount = len(fetch)
 
     for x in xrange(len(fetch)):
-        fetchArray.append({'topic': fetch[x]['topic'].encode('ascii', 'ignore'),
-                           'student': fetch[x]['student'].encode('ascii', 'ignore'),
-                           'supervisor': fetch[x]['supervisor'].encode('ascii', 'ignore'),
-                           'level': fetch[x]['level'].encode('ascii', 'ignore'),
-                           'phone': fetch[x]['phone'].encode('ascii', 'ignore'),
-                           'category': fetch[x]['category'].encode('ascii', 'ignore')})
+        fetchArray.append({"topic": fetch[x]['topic'].encode('ascii', 'ignore'),
+                           "student": fetch[x]['student'].encode('ascii', 'ignore'),
+                           "supervisor": fetch[x]['supervisor'].encode('ascii', 'ignore'),
+                           "level": fetch[x]['level'].encode('ascii', 'ignore'),
+                           "phone": fetch[x]['phone'].encode('ascii', 'ignore'),
+                           "category": fetch[x]['category'].encode('ascii', 'ignore')})
     # return request.form['option'] +', ' + request.form['level']
-    return render_template('print.html', row=rowcount, array=fetchArray, session=scss)
+    return render_template('print.html', row=rowcount, array=fetchArray, session=scss, sql=sql)
 
 
 @app.route('/excel', methods=['GET', 'POST'])
 def excel_stuff():
-    fetchArray = []
-    lv = ''
-    scss = ''
-    cursor = connection.cursor()
-    dic = {"John": "john@example.com", "Mary": "mary@example.com"}
-    content = request.form['content'].encode('ascii', 'ignore')
-    csv_file = "static/tester.csv"
-    csv = open(csv_file, "w")
-    columnTitleRow = "Topic, Platform, Supervisor, Matric No.\n"
-    csv.write(columnTitleRow)
-    split_str = str(content).split('\n')
-    a = ''
-    for x in split_str:
-        if x != '':
-            matchObj = re.match(r'\w', content, re.M | re.I)
-            # split_pipe = x.split('-')
-            # column = split_pipe.split(',')
-            # csv.write(column)
-            a += str(matchObj) + '<br>'
-    return a + "<br><a href='/static/tester.csv'>click here</a>"
+    result = request.form['result']
+    path = os.path.join(os.getenv('USERPROFILE'), 'My Documents')
+
+    if not os.path.exists(path):
+        path = os.getcwd()
+
+    path = path + "result.csv"
+    csv_columns = ['category', 'supervisor', 'level', 'topic', 'phone', 'student']
+
+    with open(unicode(path), 'w') as stream:
+        writer = csv.DictWriter(stream, fieldnames=csv_columns)
+        writer.writeheader()
+        res = json.loads(result.replace("\'", '"'))
+        for data in res:
+            writer.writerow(data)
+    return "success"
 
 
 @app.route('/update_topic', methods=['POST', 'GET'])
